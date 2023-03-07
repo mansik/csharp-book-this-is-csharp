@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace FUP
 {
@@ -24,7 +27,7 @@ namespace FUP
         }
 
         // 바디의 데이터를 바이트 배열로 변환
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             byte[] bytes = new byte[GetSize()];
             byte[] temp = BitConverter.GetBytes(FILESIZE);
@@ -59,7 +62,7 @@ namespace FUP
             RESPONSE = bytes[4];
         }
 
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             byte[] bytes = new byte[GetSize()];
             byte[] temp = BitConverter.GetBytes(MSGID);
@@ -90,7 +93,7 @@ namespace FUP
             bytes.CopyTo(DATA, 0); // DATA = bytes 를 하면 얕은 복사가 일어나며(같은 값을 참조), bytes 가 지워지면 DATA도 지워지므로 깊은 복사를 통한 값을 보존한다.
         }
 
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             return DATA;
         }
@@ -106,7 +109,7 @@ namespace FUP
     /// 바디 구조 : 파일 전송 데이터(0x02)의 메시지 식별 번호(4byte), 파일 전송 결과(1byte)
     /// 서버에서 사용
     /// </summary>
-    class BodyResult : ISerializable
+    public class BodyResult : ISerializable
     {
         public uint MSGID; // 파일 전송 데이터(0x02)의 메시지 식별 번호(4byte)
         public byte RESULT; // 파일 전송 결과(1byte)
@@ -118,10 +121,10 @@ namespace FUP
             RESULT = bytes[4];
         }
 
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             byte[] bytes = new byte[GetSize()];
-            byte[] temp = BitConverter.GetBytes(MSGID) ;
+            byte[] temp = BitConverter.GetBytes(MSGID);
             Array.Copy(temp, 0, bytes, 0, temp.Length);
             bytes[temp.Length] = RESULT;
 
@@ -130,7 +133,7 @@ namespace FUP
 
         public int GetSize()
         {
-            return sizeof(int) + sizeof(byte);
+            return sizeof(uint) + sizeof(byte);
         }
     }
 }

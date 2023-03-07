@@ -15,7 +15,7 @@ namespace FUP
         /// <param name="msg"></param>
         public static void Send(Stream writer, Message msg)
         {
-            writer.Write(msg.GetByte(), 0, msg.GetSize());
+            writer.Write(msg.GetBytes(), 0, msg.GetSize());
         }
 
         public static Message Receive(Stream reader)

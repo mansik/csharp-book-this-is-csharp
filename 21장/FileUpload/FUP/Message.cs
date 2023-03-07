@@ -3,7 +3,7 @@
     /// <summary>
     /// FUP의 헤더 및 바디가 갖고 있는 각 속성 필드에 대한 상수 정의 
     /// </summary>
-    class CONSTANTS
+    public class CONSTANTS
     {
         #region FUG의 헤더에 필요한 상수 정의
         // MSGTYPE(메시지 타입) 상수 정의(4 byte)
@@ -23,8 +23,8 @@
 
         #region FUG의 바디에 필요한 상수 정의
         // 파일 전송 승인 여부 상수 정의(1 byte), 파일 전송 요청에 대한 응답(0x02) 메시지에 필요
-        public const byte ACCECPED = 0x01; // 파일 전송 승인
-        public const byte DENYED = 0x00; // 파일 전송 거부
+        public const byte ACCEPTED = 0x01; // 파일 전송 승인
+        public const byte DENIED = 0x00; // 파일 전송 거부
 
         // 파일 전송 성공 여부 상수 정의(1 byte)
         public const byte FAIL = 0x00; // 파일 전송 성공
@@ -43,7 +43,7 @@
         /// 자신의 데이터를 바이트 배열로 변환
         /// </summary>
         /// <returns></returns>
-        byte[] GetByte();
+        byte[] GetBytes();
 
         /// <summary>
         /// 그 바이트 배열의 크기
@@ -66,11 +66,11 @@
         /// Header 와 Body의 데이터를 바이트 배열로 변환
         /// </summary>
         /// <returns></returns>
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             byte[] bytes = new byte[GetSize()];
-            Header.GetByte().CopyTo(bytes, 0); //ArrayA.CopyTo(ArrayB, int32) : 현재 배열(ArrayA)의 모든 요소를 지정된 배열 인덱스부터 시작하여 지정된 배열(ArrayB)에 복사
-            Body.GetByte().CopyTo(bytes, Header.GetSize());
+            Header.GetBytes().CopyTo(bytes, 0); //ArrayA.CopyTo(ArrayB, int32) : 현재 배열(ArrayA)의 모든 요소를 지정된 배열 인덱스부터 시작하여 지정된 배열(ArrayB)에 복사
+            Body.GetBytes().CopyTo(bytes, Header.GetSize());
 
             return bytes;
         }

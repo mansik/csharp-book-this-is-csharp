@@ -5,7 +5,7 @@ namespace FUP
     /// <summary>
     /// 메시지 헤더
     /// </summary>
-    public class Header:ISerializable
+    public class Header : ISerializable
     {
         #region FUP의 헤더가 갖고 있는 각 속성 필드의 프로프티(헤더 구조):16 byte
         /// <summary>
@@ -26,13 +26,13 @@ namespace FUP
         /// <summary>
         /// 메시지 분할 여부(1 byte)
         /// </summary>
-        public byte  FRAGMENTED { get; set; }
+        public byte FRAGMENTED { get; set; }
 
         /// <summary>
         /// 분할된 메시지가 마지막인지 여부(1 byte)
         /// </summary>
         public byte LASTMSG { get; set; }
-        
+
         /// <summary>
         /// 메시지 파편 변호(2 byte)
         /// </summary>
@@ -56,14 +56,14 @@ namespace FUP
         }
 
         #region ISerializable 인터페이스 구현
-        public byte[] GetByte()
+        public byte[] GetBytes()
         {
             // 헤더는 총 16byte로 구성되어 있다.
             byte[] bytes = new byte[16];  // 헤더의 메시지를 담을 배열
 
 
             byte[] temp = BitConverter.GetBytes(MSGID);
-            Array.Copy(temp, 0 , bytes, 0, temp.Length); // temp배열의 0번 인덱스부터 temp.Length길이만큼의 데이터를 bytes배열에 0번 인덱스 위치에 복사
+            Array.Copy(temp, 0, bytes, 0, temp.Length); // temp배열의 0번 인덱스부터 temp.Length길이만큼의 데이터를 bytes배열에 0번 인덱스 위치에 복사
 
             temp = BitConverter.GetBytes(MSGTYPE);
             Array.Copy(temp, 0, bytes, 4, temp.Length); //  temp배열의 0번 인덱스부터 temp.Length길이만큼의 데이터를 bytes배열에 4번 인덱스 위치에 복사
@@ -75,7 +75,7 @@ namespace FUP
             bytes[13] = LASTMSG;
 
             temp = BitConverter.GetBytes(SEQ);
-            Array.Copy(temp, 0, bytes, 12, temp.Length);
+            Array.Copy(temp, 0, bytes, 14, temp.Length);
 
             return bytes;
         }
